@@ -61,7 +61,7 @@ public class MusicModel {
      */
     private void iniciarMusica() {
         // Carga el archivo de música desde los recursos del proyecto
-        URL musicURL = getClass().getResource("com/example/battleship_/sound/Battleship [OST] #2 - The Art of War.mp3");
+        URL musicURL = getClass().getResource("/com/example/battleship_/sound/Pirates of the Caribbean EPIC MUSIC - Best of 1 Hour.mp3");
 
         if (musicURL != null) {
             // Crea un objeto {@code Media} para cargar el archivo de audio

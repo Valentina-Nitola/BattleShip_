@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Clase que representa la vista del menú principal del juego uno
  * @author Valentina Nitola
- * @version 1.0.3
+ * @version 1.0.4
  */
 public class MenuView extends Stage {
 
@@ -21,11 +21,12 @@ public class MenuView extends Stage {
      */
     public MenuView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
-                HelloApplication.class.getResource("/com/example/gameuno/Interfaces/menuView.fxml")
+                HelloApplication.class.getResource("/com/example/battleship_/ui/menuView.fxml")
         );
         Scene scene = new Scene(fxmlLoader.load());
         this.controller = fxmlLoader.getController();
-        this.setTitle("BattleShip --> MENU");
+        this.setResizable(false);
+        this.setTitle("Pirate War --> MENU");
         this.setScene(scene);
     }
     /**

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Clase principal que inicia la aplicación BattleShip.
+ * Clase principal que inicia la aplicación PirateWar.
  * @author Valentina Nitola
  * @version 1.0
  */
