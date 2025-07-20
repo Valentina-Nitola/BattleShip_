@@ -1,12 +1,18 @@
 package com.example.battleship_.controller;
 
-import com.example.battleship_.model.Board;
-import com.example.battleship_.model.IShape;
-import com.example.battleship_.model.Shape;
-import com.example.battleship_.model.PreparacionManager;
+import com.example.battleship_.model.*;
+import com.example.battleship_.view.JuegoView;
+import com.example.battleship_.view.MenuView;
+import com.example.battleship_.view.PreparacionView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class PreparacionController {
 
@@ -22,7 +28,8 @@ public class PreparacionController {
             btnFragata2,
             btnFragata3,
             btnFragata4,
-            girar;
+            girar,
+            btnSonido;
 
     private Button botonSeleccionado;
     private Board board;
@@ -77,4 +84,53 @@ public class PreparacionController {
             botonSeleccionado = boton;
         });
     }*/
+
+    /**
+     * Maneja el evento de clic en el botón de música.
+     * Alterna el estado de la música entre encendido/apagado y actualiza
+     * la imagen del botón.
+     *
+     * @param event Evento de acción generado por el clic
+     */
+
+    @FXML
+    private void musica(ActionEvent event) {
+        MusicModel.getInstance().toggleMusic(); // Cambia el estado de la música
+        actualizarBotonMusica(); // Actualiza la imagen del botón
+    }
+    /**
+     * Maneja el inicio de la partida.
+     * Valida el nombre del jugador y abre la vista del juego principal.
+     *
+     * @param event Evento de acción generado por el clic
+     * @throws IOException Si ocurre un error al cargar la vista del juego
+     */
+
+    @FXML
+    private void comenzar(ActionEvent event) throws IOException {
+        System.out.println("Iniciando Partida");
+
+        JuegoView juegoView = JuegoView.getInstance();
+        PreparacionView.getInstance().close();
+        juegoView.show();
+    }
+    /**
+     * Actualiza la imagen del botón de música según su estado actual.
+     * Muestra un ícono diferente para música encendida/apagada.
+     */
+    private void actualizarBotonMusica() {
+        boolean isMusicOn = MusicModel.getInstance().isMusicOn();
+        String imgPath = isMusicOn
+                ? "/com/example/battleship_/img/on.png"
+                : "/com/example/battleship_/img/off.png";
+
+        URL imgURL = getClass().getResource(imgPath);
+        if (imgURL != null) {
+            Image img = new Image(imgURL.toString());
+            ImageView imageView = new ImageView(img);
+            imageView.setFitWidth(70);
+            imageView.setFitHeight(70);
+            btnSonido.setGraphic(imageView);
+        }
+    }
 }
