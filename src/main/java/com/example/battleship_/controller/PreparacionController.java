@@ -7,6 +7,7 @@ import com.example.battleship_.view.PreparacionView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -30,6 +31,7 @@ public class PreparacionController {
             btnFragata4,
             girar,
             btnSonido;
+    @FXML private TextField txtNombre;
 
     private Button botonSeleccionado;
     private Board board;
@@ -108,6 +110,17 @@ public class PreparacionController {
 
     @FXML
     private void comenzar(ActionEvent event) throws IOException {
+        String nickname = txtNombre.getText();
+        /**
+         * Cuando se cree la logica para almacenar el nombre se usa lo siguiente:
+        JugadorModel player = new JugadorModel();
+        player.setNombre(nickname);
+
+        if (!player.isValid()) {
+            mostrarErrorNombre();
+            return;
+        }*/
+
         System.out.println("Iniciando Partida");
 
         JuegoView juegoView = JuegoView.getInstance();
