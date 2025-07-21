@@ -18,6 +18,7 @@ public class JuegoView extends Stage {
 
         Scene scene = new Scene(fxmlLoader.load());
         this.controller = fxmlLoader.getController();
+        this.setResizable(false);
         this.setTitle("PirateWar --> GAME");
         this.setScene(scene);
     }
