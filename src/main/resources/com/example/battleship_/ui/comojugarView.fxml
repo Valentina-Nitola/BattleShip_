@@ -1,14 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.battleship_.ui.ComojugarView"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="382.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_.controller.ComoJugarController">
+   <children>
+      <TabPane prefHeight="397.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Acerca de Juego">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="360.0" prefWidth="513.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="360.0" prefWidth="306.0">
+                                 <children>
+                                    <TextFlow prefHeight="94.0" prefWidth="306.0" textAlignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="El juego Pirate War de Valentina, Jhojam, Braulio y Steve es un juego  programado en JavaFX. Puedes jugar contra el jugador de computadora incorporado." textAlignment="CENTER" wrappingWidth="337.716796875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </TextFlow>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Preparate!">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="368.0" prefWidth="577.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="368.0" prefWidth="235.0">
+                                 <children>
+                                    <ImageView fitHeight="186.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/preparate.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="368.0" prefWidth="244.0">
+                                 <children>
+                                    <TextFlow prefHeight="72.0" prefWidth="306.0" textAlignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Coloca tu flota en la cuadrícula: Elige tus barcos del listado en el lado izquierdo y colócalos en el panel de estrategia. Cuando todos los barcos estén en posición, presiona el botón con un &quot;chulo&quot;." textAlignment="CENTER" wrappingWidth="263.57421875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </TextFlow>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Nickname">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="368.0" prefWidth="577.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <ImageView fitHeight="211.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/pon%20tu%20nombre.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="367.0" prefWidth="306.0">
+                                 <children>
+                                    <TextFlow prefHeight="72.0" prefWidth="306.0" textAlignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recuerda que para comenzar una partida debes ingresar tu Nickname o Apodo." textAlignment="CENTER" wrappingWidth="337.716796875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </TextFlow>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Objetivo">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="360.0" prefWidth="513.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/preparate.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="367.0" prefWidth="306.0">
+                                 <children>
+                                    <TextFlow prefHeight="72.0" prefWidth="306.0" textAlignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Comienza el bombardeo: Tu objetivo es golpear los barcos de tu enemigo, pero no conoces sus posiciones en la cuadrícula de tu oponente. Elige una coordenada en la cuadrícula para lanzar un ataque." textAlignment="CENTER" wrappingWidth="337.716796875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </TextFlow>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Turnos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="360.0" prefWidth="513.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/preparate.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="367.0" prefWidth="306.0">
+                                 <children>
+                                    <TextFlow prefHeight="72.0" prefWidth="306.0" textAlignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tu flota lanzará un cohete o torpedo a la coordenada que hayas seleccionado. Si es un acierto, habrá una explosión. Todos los cuadrados que ocupa un barco en la cuadrícula deben ser golpeados para hundirlo. Tú y tu oponente se turnarán para lanzar un ataque." textAlignment="CENTER" wrappingWidth="337.716796875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </TextFlow>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>

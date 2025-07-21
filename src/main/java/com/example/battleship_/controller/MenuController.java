@@ -99,7 +99,7 @@ public class MenuController {
 
     @FXML
     private void cargarPartida(ActionEvent event) throws IOException {
-        System.out.println("Iniciando nueva partida");
+        System.out.println("Iniciando partida guardada");
 
         JuegoView juegoView = JuegoView.getInstance();
         MenuView.getInstance().close();
