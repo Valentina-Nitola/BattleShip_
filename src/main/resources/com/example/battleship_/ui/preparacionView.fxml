@@ -20,10 +20,15 @@
             <Image url="@../img/mesa.png" />
          </image>
       </ImageView>
-      <HBox alignment="CENTER" layoutY="66.0" prefHeight="469.0" prefWidth="750.0" spacing="100.0">
+      <HBox alignment="CENTER" layoutX="23.0" layoutY="45.0" spacing="100.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="457.0" prefWidth="193.0" spacing="20.0">
+            <VBox alignment="CENTER" spacing="20.0">
                <children>
+                  <TextField fx:id="txtNombre" alignment="CENTER" prefHeight="43.0" prefWidth="183.0" style="-fx-background-color: fff9d0; -fx-border-color: CDCDCD; -fx-background-radius: 30; -fx-border-radius: 30;">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
                   <GridPane alignment="CENTER" hgap="8.0" vgap="8.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -61,11 +66,6 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextField fx:id="txtNombre" alignment="CENTER" prefHeight="43.0" prefWidth="183.0" style="-fx-background-color: fff9d0; -fx-border-color: CDCDCD; -fx-background-radius: 30; -fx-border-radius: 30;">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </TextField>
                   <Button mnemonicParsing="false" onAction="#comenzar" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
@@ -89,10 +89,20 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <AnchorPane fx:id="tableroContainer" prefHeight="396.0" prefWidth="396.0">
-               <HBox.margin>
-                  <Insets bottom="20.0" top="20.0" />
-               </HBox.margin></AnchorPane>
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <AnchorPane fx:id="tableroContainer" prefHeight="396.0" prefWidth="396.0" />
+                  <Button mnemonicParsing="false" onAction="#vertablerocpu" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/tbrocpu.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>

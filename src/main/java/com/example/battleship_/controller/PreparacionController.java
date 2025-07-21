@@ -1,9 +1,7 @@
 package com.example.battleship_.controller;
 
 import com.example.battleship_.model.*;
-import com.example.battleship_.view.JuegoView;
-import com.example.battleship_.view.MenuView;
-import com.example.battleship_.view.PreparacionView;
+import com.example.battleship_.view.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -126,6 +124,18 @@ public class PreparacionController {
         JuegoView juegoView = JuegoView.getInstance();
         PreparacionView.getInstance().close();
         juegoView.show();
+    }
+
+    /**
+     * Maneja la apertura de la vista del tutorial.
+     *
+     * @param event Evento de acción generado por el clic
+     */
+
+    @FXML
+    private void vertablerocpu(ActionEvent event) throws IOException {
+        TbroCPUView tbroCPUView = TbroCPUView.getInstance();
+        tbroCPUView.show();
     }
     /**
      * Actualiza la imagen del botón de música según su estado actual.
