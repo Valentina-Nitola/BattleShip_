@@ -20,7 +20,7 @@ public class ComoJugarView extends Stage {
      */
     public ComoJugarView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/com/example/battleship_/ui/preparacionView.fxml"));
+                getClass().getResource("/com/example/battleship_/ui/comojugarView.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
         this.controller = fxmlLoader.getController();
