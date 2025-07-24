@@ -6,6 +6,9 @@ import com.example.battleship_.model.Shape;
 import com.example.battleship_.view.ComoJugarView;
 import com.example.battleship_.view.JuegoView;
 import com.example.battleship_.view.MenuView;
+import com.example.battleship_.model.Barco;
+import com.example.battleship_.model.Tablero;
+import com.example.battleship_.model.JugadorModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -24,7 +27,7 @@ import java.net.URL;
  * incluyendo la inicialización de los tableros, el control de la música,
  * y la visualización de las leyendas de efectos (agua, tocado y hundido).
  *
- * @author Valentina Nitola
+ * @author Valentina Nitolam
  * @version 1.5.2
  */
 public class JuegoController {
@@ -60,15 +63,27 @@ public class JuegoController {
     private Board cpuBoard;
 
     /**
+     * Instancia del jugador humano.
+     */
+    JugadorModel jugador = new JugadorModel();
+
+    /**
+     * Instancia del jugador CPU.
+     */
+    JugadorModel Cpu = new JugadorModel();
+
+    /**
      * Inicializa la vista del juego, configurando los tableros y las leyendas visuales
      * de los efectos especiales (agua, tocado, hundido) en el layout.
      */
     @FXML
     public void initialize() {
+        //Esta madre crea los tableros vea pues
         playerBoard = new Board(10);
         cpuBoard = new Board(10);
         tableroPlayer.getChildren().add(playerBoard);
         tableroCPU.getChildren().add(cpuBoard);
+        iniciarPartida();
 
         // Leyenda: Agua
         Node aguaShape = new Shape.Agua().getShape(false, false, false);
@@ -91,6 +106,72 @@ public class JuegoController {
         hundido.getChildren().clear();
         hundido.getChildren().add(fuegoShape);
     }
+
+
+    /**
+     * Inicia una nueva partida de Batleship de piratiñas.
+     * Crea los barcos, reparte los barcos a los jugadores y establece el turno.
+     */
+    public void iniciarPartida() {
+        //Primero en teoria con los del jugador
+        Barco Portaviones = new Barco(Barco.TipoBarco.PORTAAVIONES, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Submarino1 = new Barco(Barco.TipoBarco.SUBMARINO, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Submarino2 = new Barco(Barco.TipoBarco.SUBMARINO, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Destructor1 = new Barco(Barco.TipoBarco.DESTRUCTOR, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Destructor2 = new Barco(Barco.TipoBarco.DESTRUCTOR, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Destructor3 = new Barco(Barco.TipoBarco.DESTRUCTOR, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata1 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata2 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata3 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata4 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        jugador.Barcos.add(Portaviones);
+        jugador.Barcos.add(Submarino1);
+        jugador.Barcos.add(Submarino2);
+        jugador.Barcos.add(Destructor1);
+        jugador.Barcos.add(Destructor2);
+        jugador.Barcos.add(Destructor3);
+        jugador.Barcos.add(Fragata1);
+        jugador.Barcos.add(Fragata2);
+        jugador.Barcos.add(Fragata3);
+        jugador.Barcos.add(Fragata4);
+        System.out.println("El jugador tiene " + jugador.Barcos.size() + " Barcos");
+        //Cpu
+        Barco Portaviones2 = new Barco(Barco.TipoBarco.PORTAAVIONES, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Submarino3 = new Barco(Barco.TipoBarco.SUBMARINO, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Submarino4 = new Barco(Barco.TipoBarco.SUBMARINO, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Destructor4 = new Barco(Barco.TipoBarco.DESTRUCTOR, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Destructor5 = new Barco(Barco.TipoBarco.DESTRUCTOR, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Destructor6 = new Barco(Barco.TipoBarco.DESTRUCTOR, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata5 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata6 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata7 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Barco Fragata8 = new Barco(Barco.TipoBarco.FRAGATA, Barco.Orientacion.HORIZONTAL, 0, 0);
+        Cpu.Barcos.add(Portaviones2);
+        Cpu.Barcos.add(Submarino3);
+        Cpu.Barcos.add(Submarino4);
+        Cpu.Barcos.add(Destructor4);
+        Cpu.Barcos.add(Destructor5);
+        Cpu.Barcos.add(Destructor6);
+        Cpu.Barcos.add(Fragata5);
+        Cpu.Barcos.add(Fragata6);
+        Cpu.Barcos.add(Fragata7);
+        Cpu.Barcos.add(Fragata8);
+        System.out.println("El Cpu tiene " + Cpu.Barcos.size() + " Barcos");
+        Cpu.setTurno(false);
+    }
+/*
+        if (!mazo.isEmpty()) {
+            cartaEnMesa = mazo.remove(0);
+            cartaEnMesa.setEstado(JuegoModel.Estado.JUGADA);
+            actualizarCartaEnMesa();
+            System.out.println(cartaEnMesa.getTipo());
+            System.out.println(cartaEnMesa.getColor());
+            System.out.println(cartaEnMesa.getNumero());
+        }
+        actualizarManoJugador();
+    }
+  */
+
 
     /**
      * Maneja la apertura de la vista del tutorial.
