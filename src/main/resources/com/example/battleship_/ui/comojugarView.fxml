@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="382.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_.controller.ComoJugarController">
+<AnchorPane prefHeight="382.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_.controller.ComoJugarController">
    <children>
       <TabPane prefHeight="397.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -27,7 +20,7 @@
                                  <children>
                                     <TextFlow prefHeight="94.0" prefWidth="306.0" textAlignment="CENTER">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="El juego Pirate War de Valentina, Jhojam, Braulio y Steve es un juego  programado en JavaFX. Puedes jugar contra el jugador de computadora incorporado." textAlignment="CENTER" wrappingWidth="337.716796875">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="El juego Pirate War de Balentina, Jhojam, Braulio y Steve es un juego  programado en JavaFX. Puedes jugar contra el jugador de computadora incorporado." textAlignment="CENTER" wrappingWidth="337.716796875">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
