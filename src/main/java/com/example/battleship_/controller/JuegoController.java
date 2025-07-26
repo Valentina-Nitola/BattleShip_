@@ -1,18 +1,14 @@
 package com.example.battleship_.controller;
 
-import com.example.battleship_.model.Board;
-import com.example.battleship_.model.MusicModel;
-import com.example.battleship_.model.Shape;
+import com.example.battleship_.model.*;
 import com.example.battleship_.view.ComoJugarView;
 import com.example.battleship_.view.JuegoView;
 import com.example.battleship_.view.MenuView;
-import com.example.battleship_.model.Barco;
-import com.example.battleship_.model.Tablero;
-import com.example.battleship_.model.JugadorModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -28,6 +24,7 @@ import java.net.URL;
  * y la visualización de las leyendas de efectos (agua, tocado y hundido).
  *
  * @author Valentina Nitolam
+ * @author Jhojan Moreno
  * @version 1.5.2
  */
 public class JuegoController {
@@ -71,19 +68,22 @@ public class JuegoController {
      * Instancia del jugador CPU.
      */
     JugadorModel Cpu = new JugadorModel();
+    @FXML
+    private Label IndicadorCentral;
 
     /**
      * Inicializa la vista del juego, configurando los tableros y las leyendas visuales
      * de los efectos especiales (agua, tocado, hundido) en el layout.
      */
     @FXML
-    public void initialize() {
+    public void initialize() throws InterruptedException {
         //Esta madre crea los tableros vea pues
         playerBoard = new Board(10);
         cpuBoard = new Board(10);
         tableroPlayer.getChildren().add(playerBoard);
         tableroCPU.getChildren().add(cpuBoard);
         iniciarPartida();
+
 
         // Leyenda: Agua
         Node aguaShape = new Shape.Agua().getShape(false, false, false);
@@ -112,7 +112,7 @@ public class JuegoController {
      * Inicia una nueva partida de Batleship de piratiñas.
      * Crea los barcos, reparte los barcos a los jugadores y establece el turno.
      */
-    public void iniciarPartida() {
+    public void iniciarPartida() throws InterruptedException {
         //Primero en teoria con los del jugador
         Barco Portaviones = new Barco(Barco.TipoBarco.PORTAAVIONES, Barco.Orientacion.HORIZONTAL, 0, 0);
         Barco Submarino1 = new Barco(Barco.TipoBarco.SUBMARINO, Barco.Orientacion.HORIZONTAL, 0, 0);
@@ -134,6 +134,7 @@ public class JuegoController {
         jugador.Barcos.add(Fragata2);
         jugador.Barcos.add(Fragata3);
         jugador.Barcos.add(Fragata4);
+        jugador.setTurno(true);
         System.out.println("El jugador tiene " + jugador.Barcos.size() + " Barcos");
         //Cpu
         Barco Portaviones2 = new Barco(Barco.TipoBarco.PORTAAVIONES, Barco.Orientacion.HORIZONTAL, 0, 0);
@@ -158,19 +159,73 @@ public class JuegoController {
         Cpu.Barcos.add(Fragata8);
         System.out.println("El Cpu tiene " + Cpu.Barcos.size() + " Barcos");
         Cpu.setTurno(false);
+        Turnos();
+
+
+
+        //mostrarBarcosJugador(jugador.getBarcos(), playerBoard);
     }
-/*
-        if (!mazo.isEmpty()) {
-            cartaEnMesa = mazo.remove(0);
-            cartaEnMesa.setEstado(JuegoModel.Estado.JUGADA);
-            actualizarCartaEnMesa();
-            System.out.println(cartaEnMesa.getTipo());
-            System.out.println(cartaEnMesa.getColor());
-            System.out.println(cartaEnMesa.getNumero());
+
+
+
+    public void Turnos() throws InterruptedException {
+        if (jugador.isTurno()) {
+            IndicadorCentral.setText("Turno del Jugador, Elige una celda");
+        } else {
+            IndicadorCentral.setText("Turno del Cpu, Eligiendo donde atacar...");
+            Cpu.wait(3500);
+
+            Cpu.decision();
+
+
         }
-        actualizarManoJugador();
+
     }
-  */
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    // Metodo?
+    public void mostrarBarcosJugador(List<Barco> barcos, Board board) {
+        for (Barco barco : barcos) {
+            IShape shape;
+            switch (barco.getTipo()) {
+                case PORTAAVIONES -> shape = new Shape.Portaaviones();
+                case SUBMARINO -> shape = new Shape.Submarino();
+                case DESTRUCTOR -> shape = new Shape.Destructor();
+                case FRAGATA -> shape = new Shape.Fragata();
+                default -> {
+                    continue;
+                }
+            }
+
+            boolean esVertical = barco.getOrientacion() == Barco.Orientacion.VERTICAL;
+            boolean estaHundido = barco.isHundido();
+
+            for (int[] coord : barco.getCordenadas()) {
+                int fila = coord[0];
+                int columna = coord[1];
+                boolean fueGolpeada = barco.estanGolpeadasEn(fila, columna);
+
+                board.setCellShape(fila, columna, shape, esVertical, fueGolpeada, estaHundido);
+            }
+        }
+
+        playerBoard.addClickHandler((fila, columna) -> {
+            System.out.println("Click en jugador: " + fila + "," + columna);
+        });
+
+
+    }*/
 
 
     /**
