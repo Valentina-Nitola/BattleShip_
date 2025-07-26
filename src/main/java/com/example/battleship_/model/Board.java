@@ -3,8 +3,11 @@ package com.example.battleship_.model;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+
+import java.util.function.BiConsumer;
 
 /**
  * Tablero visual para PirateWar
@@ -54,6 +57,25 @@ public class Board extends GridPane {
                 cell.setOnMouseExited(e -> cell.setStyle(
                         "-fx-background-color: #2d4c6a; -fx-border-color: #c2b280; -fx-border-width: 2px; -fx-border-radius: 4px;"));
                 // Puedes añadir aquí listeners para clicks si lo deseas
+                cell.setOnMouseClicked(e -> {
+                    System.out.println("Clic en celda: " + r + "," + c);
+                    // Aquí puedes manejar disparos o colocación
+                });
+                cell.setOnDragOver(event -> {
+                    if (event.getGestureSource() != cell && event.getDragboard().hasString()) {
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    event.consume();
+                });
+
+                cell.setOnDragDropped(event -> {
+                    // Obtener tipo de barco, orientación, etc.
+                    // Y colocarlo visualmente
+                    event.setDropCompleted(true);
+                    event.consume();
+                });
+
+
 
                 this.cells[row][col] = cell;
                 this.add(cell, col + 1, row + 1); // +1 para dejar espacio a las coordenadas
@@ -82,6 +104,21 @@ public class Board extends GridPane {
             this.add(num, 0, row + 1); // Row +1 para dejar la esquina
         }
     }
+
+
+
+    public void addClickHandler(BiConsumer<Integer, Integer> handler) {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                int finalRow = row;
+                int finalCol = col;
+                cells[row][col].setOnMouseClicked(e -> handler.accept(finalRow, finalCol));
+            }
+        }
+    }
+
+
+
 
     /**
      * Dibuja una figura en una celda específica.

@@ -1,5 +1,6 @@
 package com.example.battleship_.model;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Clase que representa a un jugador en el juego UNO.
@@ -87,26 +88,19 @@ public class JugadorModel {
 
 
 
-
     // Métodos de funcionalidad
 
     /**
-     * Reparte las cartas iniciales al jugador (5 cartas).
-     * Toma cartas del mazo principal y las añade a la mano del jugador.
+     * Obtiene una posicion aleatoria
      *
-     * @param mazo Mazo de cartas del que se reparten
+     * @return int decision, Número de casilla a la que ataca
      */
-    /*
-    public void GenerarBarcosIniciales(ArrayList<Barco> Flota) {
-        for (int i = 0; i < 5; i++) {
-            if (!mazo.isEmpty()) {
-                JuegoModel.Carta carta = mazo.remove(0); // Toma la primera carta
-                carta.setEstado(JuegoModel.Estado.MANO); // Cambia estado a "en mano"
-                this.Mano.add(carta); // Añade a la mano del jugador
-            }
-        }
-    }
-*/
+public int decision(){
+        Random Randnumber = new Random();
+        return Randnumber.nextInt(99 + 1); //si es menor a 10, que empiece con 0 para ubicar celdas
+}
+
+
     /**
      * Valida si el nombre del jugador es válido.
      * Un nombre válido no es nulo y no está vacío o solo contiene espacios.

@@ -15,7 +15,7 @@
       </ImageView>
       <VBox alignment="CENTER" layoutX="33.0" layoutY="35.0" spacing="20.0">
          <children>
-            <Label alignment="CENTER" prefWidth="500.0" style="-fx-background-color: fff9d0; -fx-background-radius: 10;" text="Turno Actual">
+            <Label fx:id="IndicadorCentral" alignment="CENTER" prefWidth="500.0" style="-fx-background-color: fff9d0; -fx-background-radius: 10;" text="Turno Actual">
                <font>
                   <Font name="Arial" size="25.0" />
                </font>
