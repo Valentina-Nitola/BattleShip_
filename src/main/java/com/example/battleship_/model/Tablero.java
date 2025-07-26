@@ -11,6 +11,7 @@ import java.util.Optional;
  * y las reglas de interacción como colocar barcos y procesar disparos.
  * Actúa como el "Modelo" principal del estado del juego.
  * @author Jhon Steven Angulo
+ * @version 1.0.2
  */
 public class Tablero implements Serializable {
 
@@ -67,6 +68,14 @@ public class Tablero implements Serializable {
 
 
     /**
+     * Devuelve el tamaño del tablero.
+     * @return el tamaño del lado del tablero.
+     */
+    public int getTAMANIO() {
+        return TAMANIO;
+    }
+
+    /**
      * Intenta colocar un barco en el tablero en una posición y orientación específicas.
      * El barco solo se colocará si la posición es válida (dentro de los límites y sin solaparse con otros barcos).
      * @param barco El objeto Barco a colocar.
@@ -118,8 +127,8 @@ public class Tablero implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Devuelve el arreglo de los barcos
+     * @return barcos
      */
     public List<Barco> getBarcos() {
         return barcos;
@@ -132,13 +141,24 @@ public class Tablero implements Serializable {
      * @param columna Columna a buscar.
      * @return Un {@link Optional} que contiene el Barco si se encuentra, o un Optional vacío si no.
      */
-    private Optional<Barco> encontrarBarcoEn(int fila, int columna) {
+    public Optional<Barco> encontrarBarcoEn(int fila, int columna) {
         for (Barco barco : barcos) {
             if (barco.contieneCoordenadas(fila, columna)) {
                 return Optional.of(barco);
             }
         }
         return Optional.empty();
+    }
+
+
+    /**
+     * Marca todas las casillas de un barco específico como HUNDIDO.
+     * @param barco El barco que ha sido hundido.
+     */
+    public void marcarBarcoComoHundido(Barco barco) {
+        for (int[] coord : barco.getCordenadas()) {
+            setCasilla(coord[0], coord[1], Casilla.HUNDIDO);
+        }
     }
 
     /**
@@ -149,11 +169,13 @@ public class Tablero implements Serializable {
      * @param columna La columna del disparo.
      * @return El objeto Barco que fue golpeado, o null si el disparo fue al agua o en una casilla ya disparada.
      */
-    public Barco disparos(int fila, int columna) {
+    public Barco disparos(int fila, int columna ) {
+
         // Validar si la casilla ya fue disparada antes para no hacer trabajo extra
-        if (getCasilla(fila, columna) == Casilla.GOLPEADA || getCasilla(fila, columna) == Casilla.AGUA) {
-            return null; // Ya se disparó aquí, no hay resultado nuevo.
-        }
+        if (getCasilla(fila, columna) == Casilla.AGUA)
+            return null;
+
+        //Ya se disparó aquí, no hay resultado nuevo.
 
         Optional<Barco> barcoOpt = encontrarBarcoEn(fila, columna);
 
@@ -165,7 +187,7 @@ public class Tablero implements Serializable {
             return barcoGolpeado; // Devolvemos el barco para que el juego sepa qué pasó
         } else {
             // Es agua
-            setCasilla(fila, columna, Casilla.AGUA); // Se recomienda añadir AGUA a tu enum Casilla
+            setCasilla(fila, columna, Casilla.AGUA);
             return null;
         }
     }

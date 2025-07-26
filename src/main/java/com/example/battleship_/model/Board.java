@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.function.BiConsumer;
 
@@ -14,7 +13,7 @@ import java.util.function.BiConsumer;
  * Este tablero puede ser usado en cualquier view (preparación, jugador, CPU, etc.).
  *
  * @author Valentina
- * @version 2.0.0
+ * @version 2.0.2
  */
 public class Board extends GridPane {
     private int size;
@@ -105,8 +104,6 @@ public class Board extends GridPane {
         }
     }
 
-
-
     public void addClickHandler(BiConsumer<Integer, Integer> handler) {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -117,23 +114,18 @@ public class Board extends GridPane {
         }
     }
 
-
-
-
     /**
-     * Dibuja una figura en una celda específica.
-     * @param row Fila (0-indexado)
-     * @param col Columna (0-indexado)
-     * @param shape Figura IShape a dibujar
-     * @param vertical Orientación
-     * @param sunk Si está hundido
-     * @param hit Si está tocado
+     * Simplemente coloca cualquier nodo (una pieza de barco, un efecto) en una celda.
+     * @param row Fila
+     * @param col Columna
+     * @param content El nodo a dibujar (ya debe tener el tamaño correcto)
      */
-    public void setCellShape(int row, int col, IShape shape, boolean vertical, boolean sunk, boolean hit) {
-        StackPane cell = cells[row][col];
-        cell.getChildren().clear();
-        Node figura = shape.getShape(vertical, sunk, hit);
-        cell.getChildren().add(figura);
+    public void setCellContent(int row, int col, Node content) {
+        if (row >= 0 && row < size && col >= 0 && col < size) {
+            StackPane cell = cells[row][col];
+            cell.getChildren().clear();
+            cell.getChildren().add(content);
+        }
     }
 
     /**
