@@ -8,7 +8,7 @@ import java.util.Random;
  * la condición de haber gritado "UNO".
  *
  * @Author Jhojan Moreno
- * @version 1.0.0
+ * @version 1.0.2
  */
 public class JugadorModel {
 
@@ -16,6 +16,12 @@ public class JugadorModel {
      * Lista de Barcos que el jugador tiene en su tablero
      */
     public ArrayList<Barco> Barcos;
+
+
+    /**
+     * Tablero logico del jugador
+     */
+    public Tablero tablero;
 
     /**
      * Nombre del jugador
@@ -33,10 +39,21 @@ public class JugadorModel {
     private boolean Disparo = false;
 
     /**
-     * Constructor que inicializa los barcos del jugador como lista vacía.
+     * Constructor que inicializa los barcos del jugador como lista vacía, incluyendo su tablero.
      */
-    public JugadorModel() {this.Barcos = new ArrayList<>();}
+    public JugadorModel() {
+        this.Barcos = new ArrayList<>();
+        this.tablero = new Tablero();
+    }
 
+    /**
+     * Reinicia el tablero del jugador, junto con sus barcos
+     */
+    public void reset() {
+        this.Barcos.clear();
+        this.tablero.limpiarTablero();
+        this.turno = false;
+    }
 
 
     // Métodos de acceso (getters)
@@ -82,7 +99,7 @@ public class JugadorModel {
 
     /**
      * Establece si el jugador ha Disparado
-     * @param Uno true si Disparo, false si no
+     * @param Disparo true si Disparo, false si no
      */
     public void setDisparo(boolean Disparo) { this.Disparo = Disparo; }
 
@@ -95,10 +112,10 @@ public class JugadorModel {
      *
      * @return int decision, Número de casilla a la que ataca
      */
-public int decision(){
+    public int decision(){
         Random Randnumber = new Random();
         return Randnumber.nextInt(99 + 1); //si es menor a 10, que empiece con 0 para ubicar celdas
-}
+    }
 
 
     /**

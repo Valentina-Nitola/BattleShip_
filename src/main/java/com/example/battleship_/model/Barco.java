@@ -8,6 +8,7 @@ package com.example.battleship_.model;
  * Representa un barco en el juego de batalla naval.
  * Contiene informacion de su tipo, tamaño orientacion y estado.
  * @author Braulio
+ * @version 1.2
  */
 public class Barco implements Serializable {
 
@@ -23,21 +24,33 @@ public class Barco implements Serializable {
      * Enumeracion que define los tipos de barco.
      */
     public enum TipoBarco {
-        PORTAAVIONES (4,"Portaaviones"),
-        SUBMARINO (3,"Submarino"),
-        DESTRUCTOR (2,"Destructor"),
-        FRAGATA(1,"Fragata");
+        // Usamos los tamaños definidos en tus clases Shape (4, 3, 2, 1)
+        PORTAAVIONES(4, "Portaaviones", new Shape.Portaaviones()),
+        SUBMARINO(3, "Submarino", new Shape.Submarino()),
+        DESTRUCTOR(2, "Destructor", new Shape.Destructor()),
+        FRAGATA(1, "Fragata", new Shape.Fragata());
 
         private final int tamanio;
         private final String nombre;
+        private final IShape shape;
 
-        TipoBarco(int tamanio, String nombre) {
+        TipoBarco(int tamanio, String nombre, IShape shape) {
             this.tamanio = tamanio;
             this.nombre = nombre;
+            this.shape = shape;
         }
 
-        public int getTamanio() {return tamanio;}
-        public String getNombre() {return nombre;}
+        public int getTamanio() {
+            return tamanio;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public IShape getShape() {
+            return shape;
+        }
     }
 
     /**
@@ -48,6 +61,20 @@ public class Barco implements Serializable {
     }
 
     /**
+     * Constructor para crear barcos antes de saber su posición.
+     * @param tipo Tipo del barco
+     */
+    public Barco(TipoBarco tipo) {
+        this.tipo = tipo;
+        this.partesGolpeadas = new ArrayList<>();
+        this.hundido = false;
+        // Inicia todas las partes como no golpeadas
+        for (int i = 0; i < tipo.getTamanio(); i++) {
+            partesGolpeadas.add(false);
+        }
+    }
+
+    /**
      * Constructor del barco.
      * @param tipo Tipo del barco
      * @param orientacion Orientacion el barco
@@ -55,18 +82,10 @@ public class Barco implements Serializable {
      * @param columnaInicio Columna inicial de colocacion
      */
     public Barco(TipoBarco tipo, Orientacion orientacion, int filaInicio, int columnaInicio) {
-        this.tipo = tipo;
+        this(tipo);
         this.orientacion = orientacion;
         this.filaInicio = filaInicio;
         this.columnaInicio = columnaInicio;
-        this.partesGolpeadas = new ArrayList<>();
-        this.hundido = false;
-
-
-        //inicia todas las partes como no golpeadas
-        for (int i = 0 ; i < tipo.getTamanio(); i++){
-            partesGolpeadas.add(false);
-        }
     }
 
     /**
@@ -149,6 +168,8 @@ public class Barco implements Serializable {
         }
         return false;
     }
+
+
 
     //getters y setters
 

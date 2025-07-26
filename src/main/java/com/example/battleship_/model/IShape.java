@@ -1,27 +1,32 @@
+
 package com.example.battleship_.model;
+
+import javafx.scene.Node;
+
 /**
  * Interfaz que define el contrato para las figuras 2D de los barcos y efectos visuales en el juego Batalla Naval.
  * Cualquier clase que implemente esta interfaz debe proveer un método para obtener la figura a dibujar
  * y el tamaño del elemento representado en casillas del tablero.
  *
  * @author Valentina
- * @version 1.0.0
+ * @version 1.0.1
  */
 public interface IShape {
     /**
-     * Retorna la figura 2D ({@link Node}) que representa la casilla del tablero.
+     * CAMBIO: Retorna la figura 2D (Node) para una parte específica del barco.
      *
-     * @param vertical indica si la figura debe representarse en posición vertical
-     * @param sunk     indica si la figura corresponde a un barco hundido
-     * @param hit      indica si la figura corresponde a un barco tocado pero no hundido
-     * @return un {@link Node} de JavaFX con la figura gráfica que representa el estado
+     * @param partIndex el índice de la pieza (0 para proa, 1 para medio, etc.).
+     * @param vertical indica si la figura debe representarse en posición vertical.
+     * @param sunk     indica si la figura corresponde a un barco hundido.
+     * @param hit      indica si la figura corresponde a un barco tocado.
+     * @return un Node de JavaFX con la figura gráfica de esa pieza.
      */
-    javafx.scene.Node getShape(boolean vertical, boolean sunk, boolean hit);
+    Node getShapePart(int partIndex, boolean vertical, boolean sunk, boolean hit);
+
     /**
      * Retorna el tamaño del elemento (número de casillas que ocupa en el tablero).
-     * Por ejemplo: 4 para portaaviones, 1 para fragata.
      *
-     * @return cantidad de casillas que ocupa
+     * @return cantidad de casillas que ocupa.
      */
     int getSize();
 }
