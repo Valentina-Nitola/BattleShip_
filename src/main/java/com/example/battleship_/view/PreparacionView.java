@@ -39,10 +39,17 @@ public class PreparacionView extends Stage {
      *
      */
     public static PreparacionView getInstance() throws IOException {
-        if (PreparacionView.PreparacionViewHolder.INSTANCE == null) {
-            PreparacionView.PreparacionViewHolder.INSTANCE = new PreparacionView();
+        if (PreparacionViewHolder.INSTANCE == null) {
+            PreparacionViewHolder.INSTANCE = new PreparacionView();
         }
-        return PreparacionView.PreparacionViewHolder.INSTANCE;
+        return PreparacionViewHolder.INSTANCE;
+    }
+
+    public static void resetInstance() {
+        if (PreparacionViewHolder.INSTANCE != null) {
+            PreparacionViewHolder.INSTANCE.close();
+            PreparacionViewHolder.INSTANCE = null;
+        }
     }
 
     /**

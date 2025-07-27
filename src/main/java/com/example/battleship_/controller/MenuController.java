@@ -1,5 +1,6 @@
 package com.example.battleship_.controller;
 
+import com.example.battleship_.model.GameStateManager;
 import com.example.battleship_.model.MusicModel;
 import com.example.battleship_.view.ComoJugarView;
 import com.example.battleship_.view.JuegoView;
@@ -92,6 +93,11 @@ public class MenuController {
     private void nuevaPartida(ActionEvent event) throws IOException {
         System.out.println("Iniciando nueva partida");
 
+
+        GameStateManager.getInstance().reset();
+        PreparacionView.resetInstance();
+        JuegoView.resetInstance();
+
         PreparacionView preparacionView = PreparacionView.getInstance();
         MenuView.getInstance().close();
         preparacionView.show();
@@ -100,6 +106,10 @@ public class MenuController {
     @FXML
     private void cargarPartida(ActionEvent event) throws IOException {
         System.out.println("Iniciando partida guardada");
+
+        GameStateManager.getInstance().reset();
+        JuegoView.resetInstance();
+        PreparacionView.resetInstance();
 
         JuegoView juegoView = JuegoView.getInstance();
         MenuView.getInstance().close();

@@ -1,9 +1,11 @@
 package com.example.battleship_.controller;
 
+import com.example.battleship_.model.GameStateManager;
 import com.example.battleship_.model.*;
 import com.example.battleship_.view.ComoJugarView;
 import com.example.battleship_.view.JuegoView;
 import com.example.battleship_.view.MenuView;
+import com.example.battleship_.view.PreparacionView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,7 +88,19 @@ public class JuegoController {
     @FXML
     public void initialize() throws InterruptedException {
 
-        jugador = new JugadorModel();
+        if (GameStateManager.getInstance().hasJugador()) {
+
+            jugador = GameStateManager.getInstance().getJugador();
+            System.out.println("Cargando jugador desde preparación: " + jugador.getNombre());
+            System.out.println("Barcos del jugador: " + jugador.Barcos.size());
+        } else {
+
+            jugador = new JugadorModel();
+            crearFlotaPara(jugador);
+            posicionarBarcosAleatoriamente(jugador);
+            System.out.println("Creando nuevo jugador aleatorio");
+        }
+
         cpu = new JugadorModel();
 
         playerBoard = new Board(10);
@@ -131,14 +145,16 @@ public class JuegoController {
      */
     public void iniciarPartida() {
         juegoTerminado = false;
-        jugador. reset();
+
         cpu.reset();
-
-        crearFlotaPara(jugador);
         crearFlotaPara(cpu);
-
-        posicionarBarcosAleatoriamente(jugador); // Crear otra funcion para hacerl manualmente
         posicionarBarcosAleatoriamente(cpu);
+
+        if (!GameStateManager.getInstance().hasJugador()) {
+            // Solo si no viene de preparación, crear barcos aleatorios
+            crearFlotaPara(jugador);
+            posicionarBarcosAleatoriamente(jugador);
+        }
 
         sincronizarTableroVisual(jugador, playerBoard, true);
         sincronizarTableroVisual(cpu, cpuBoard, true);
@@ -415,8 +431,14 @@ public class JuegoController {
     private void salir(ActionEvent event) throws IOException {
         System.out.println("Saliendo de la Partida");
 
+
+        JuegoView.resetInstance();
+        PreparacionView.resetInstance();
+
+        // Limpiar el estado del juego
+        GameStateManager.getInstance().reset();
+
         MenuView menuView = MenuView.getInstance();
-        JuegoView.getInstance().close();
         menuView.show();
     }
 

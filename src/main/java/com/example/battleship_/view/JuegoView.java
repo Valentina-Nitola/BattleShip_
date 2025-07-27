@@ -23,6 +23,13 @@ public class JuegoView extends Stage {
         this.setScene(scene);
     }
 
+    public static void resetInstance() {
+        if (JuegoViewHolder.INSTANCE != null) {
+            JuegoViewHolder.INSTANCE.close();
+            JuegoViewHolder.INSTANCE = null;
+        }
+    }
+
     public JuegoController getController() {
         return controller;
     }
