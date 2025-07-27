@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class PreparacionController {
@@ -51,6 +52,8 @@ public class PreparacionController {
     private Board board;
     private PreparacionManager manager;
     private JugadorModel jugador;
+    private JugadorModel cpu;
+    private Random random = new Random();
     private Map<Button, String> barcoTypes;
     private Map<String, Integer> barcosColocados;
 
@@ -62,6 +65,13 @@ public class PreparacionController {
         manager = new PreparacionManager();
 
         jugador = new JugadorModel();
+
+        System.out.println("Creando y preparando a la CPU en segundo plano...");
+        cpu = new JugadorModel();
+        crearFlotaPara(cpu);
+        posicionarBarcosAleatoriamente(cpu);
+
+        GameStateManager.getInstance().setCpu(this.cpu);
 
         initializeBarcoMaps();
 
@@ -312,6 +322,33 @@ public class PreparacionController {
         btnFragata4.setGraphic(ensamblarBarco(new Shape.Fragata(), vertical));
     }
 
+
+    private void crearFlotaPara(JugadorModel jugadorModel) {
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.PORTAAVIONES));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.SUBMARINO));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.SUBMARINO));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.DESTRUCTOR));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.DESTRUCTOR));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.DESTRUCTOR));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
+        jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
+    }
+
+    private void posicionarBarcosAleatoriamente(JugadorModel jugadorModel) {
+        Tablero tableroLogico = jugadorModel.tablero;
+        for (Barco barco : jugadorModel.Barcos) {
+            boolean posicionado = false;
+            while (!posicionado) {
+                int fila = random.nextInt(tableroLogico.getTAMANIO());
+                int col = random.nextInt(tableroLogico.getTAMANIO());
+                Barco.Orientacion orientacion = random.nextBoolean() ? Barco.Orientacion.HORIZONTAL : Barco.Orientacion.VERTICAL;
+                posicionado = tableroLogico.colocarBarco(barco, fila, col, orientacion);
+            }
+        }
+    }
+
     /**
      * Crea una vista previa de un barco completo
      * uniendo todas sus piezas en un VBox (vertical) o HBox (horizontal).
@@ -403,7 +440,13 @@ public class PreparacionController {
      */
     @FXML
     private void vertablerocpu(ActionEvent event) throws IOException {
+
         TbroCPUView tbroCPUView = TbroCPUView.getInstance();
+
+        TbroCPUController controller = tbroCPUView.getController();
+
+        controller.mostrarTableroCPU(this.cpu);
+
         tbroCPUView.show();
     }
 

@@ -109,9 +109,9 @@ public class JuegoController {
         } else if (gsm.hasJugador()) {
             System.out.println("Cargando jugador desde la pantalla de preparación...");
             jugador = gsm.getJugador();
-            cpu = new JugadorModel();
-            crearFlotaPara(cpu);
-            posicionarBarcosAleatoriamente(cpu);
+
+            System.out.println("Cargando CPU pre-generada...");
+            cpu = gsm.getCpu();
         } else {
             System.out.println("Iniciando nueva partida aleatoria...");
             iniciarPartidaAleatoria();

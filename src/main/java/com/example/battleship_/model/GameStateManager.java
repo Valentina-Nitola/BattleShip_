@@ -10,6 +10,7 @@ package com.example.battleship_.model;
 public class GameStateManager {
     private static GameStateManager instance;
     private JugadorModel jugador;
+    private JugadorModel cpu;
     private boolean cargandoPartida;
 
     private GameStateManager() {
@@ -67,11 +68,24 @@ public class GameStateManager {
         return jugador != null;
     }
 
+    public void setCpu(JugadorModel cpu) {
+        this.cpu = cpu;
+    }
+
+    public JugadorModel getCpu() {
+        return cpu;
+    }
+
+    public boolean hasCpu() {
+        return cpu != null;
+    }
+
     /**
      * Limpia el estado del juego, incluyendo la bandera de carga.
      */
     public void reset() {
         jugador = null;
+        cpu = null;
         cargandoPartida = false;
     }
 }
