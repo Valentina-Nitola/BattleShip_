@@ -169,12 +169,15 @@ public class Tablero implements Serializable {
      * @param columna La columna del disparo.
      * @return El objeto Barco que fue golpeado, o null si el disparo fue al agua o en una casilla ya disparada.
      */
-    public Barco disparos(int fila, int columna ) {
+    public Barco disparos(int fila, int columna ) throws IllegalStateException {
+
+        Casilla estadoActual = getCasilla(fila, columna);
 
         // Validar si la casilla ya fue disparada antes para no hacer trabajo extra
-        if (getCasilla(fila, columna) == Casilla.AGUA)
-            return null;
-
+        if (estadoActual == Casilla.GOLPEADA || estadoActual == Casilla.HUNDIDO || estadoActual == Casilla.AGUA) {
+            throw new IllegalStateException(
+                    "La casilla (" + fila + ", "+ columna + ") ya ha sido disparada. Su estado es: " + estadoActual);
+        }
         //Ya se disparó aquí, no hay resultado nuevo.
 
         Optional<Barco> barcoOpt = encontrarBarcoEn(fila, columna);
@@ -182,9 +185,18 @@ public class Tablero implements Serializable {
         if (barcoOpt.isPresent()) {
             // ¡Es un golpe!
             Barco barcoGolpeado = barcoOpt.get();
-            setCasilla(fila, columna, Casilla.GOLPEADA);
             barcoGolpeado.recibirImpacto(fila, columna); // El barco actualiza su estado interno
-            return barcoGolpeado; // Devolvemos el barco para que el juego sepa qué pasó
+
+            // 3. Revisar si el impacto hundió el barco.
+            if (barcoGolpeado.isHundido()) {
+                // Si se hundió, marcamos TODAS sus partes como HUNDIDO.
+                marcarBarcoComoHundido(barcoGolpeado);
+            } else {
+                // Si solo fue un golpe, marcamos solo esta casilla como GOLPEADA.
+                setCasilla(fila, columna, Casilla.GOLPEADA);
+            }
+            return barcoGolpeado; // Devolvemos el barco para que el juego sepa qué pasó.
+
         } else {
             // Es agua
             setCasilla(fila, columna, Casilla.AGUA);
