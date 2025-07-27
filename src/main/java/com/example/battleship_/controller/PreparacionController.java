@@ -7,7 +7,7 @@ import com.example.battleship_.view.PreparacionView;
 import com.example.battleship_.view.TbroCPUView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node; // Asegúrate de importar Node
+import javafx.scene.Node;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,9 +18,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox; // Importante para ensamblar barcos horizontales
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox; // Importante para ensamblar barcos verticales
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
