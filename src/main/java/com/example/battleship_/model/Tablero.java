@@ -36,7 +36,6 @@ public class Tablero implements Serializable {
         }
     }
 
-
     /**
      * Obtiene el estado de una casilla específica en la cuadrícula.
      * @param fila la fila de la Cuadricula
