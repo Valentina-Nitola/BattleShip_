@@ -79,38 +79,76 @@ public class JuegoController {
     JugadorModel cpu;
 
     private Random random = new Random();
-    private boolean juegoTerminado = false; // Para evitar acciones después del final
+    private boolean juegoTerminado = false;
 
 
     /**
-     * Inicializa la vista del juego.
+     * Inicia el juego junto con su estado para guardar o cargar una partida nueva
      */
     @FXML
-    public void initialize() throws InterruptedException {
-
-        if (GameStateManager.getInstance().hasJugador()) {
-
-            jugador = GameStateManager.getInstance().getJugador();
-            System.out.println("Cargando jugador desde preparación: " + jugador.getNombre());
-            System.out.println("Barcos del jugador: " + jugador.Barcos.size());
-        } else {
-
-            jugador = new JugadorModel();
-            crearFlotaPara(jugador);
-            posicionarBarcosAleatoriamente(jugador);
-            System.out.println("Creando nuevo jugador aleatorio");
-        }
-
-        cpu = new JugadorModel();
-
+    public void initialize() {
         playerBoard = new Board(10);
         cpuBoard = new Board(10);
-
         tableroPlayer.getChildren().add(playerBoard);
         tableroCPU.getChildren().add(cpuBoard);
-
         setupLegends();
-        iniciarPartida();
+
+        GameStateManager gsm = GameStateManager.getInstance();
+
+        if (gsm.isCargandoPartida()) {
+            System.out.println("Cargando partida desde archivo...");
+            PartidaGuardada partidaCargada = SaveLoadManager.cargarPartida();
+            if (partidaCargada != null) {
+                jugador = partidaCargada.getJugador();
+                cpu = partidaCargada.getCpu();
+                System.out.println("Partida cargada para el jugador: " + jugador.getNombre());
+            } else {
+                System.out.println("Fallo al cargar, iniciando nueva partida aleatoria.");
+                iniciarPartidaAleatoria();
+            }
+        } else if (gsm.hasJugador()) {
+            System.out.println("Cargando jugador desde la pantalla de preparación...");
+            jugador = gsm.getJugador();
+            cpu = new JugadorModel();
+            crearFlotaPara(cpu);
+            posicionarBarcosAleatoriamente(cpu);
+        } else {
+            System.out.println("Iniciando nueva partida aleatoria...");
+            iniciarPartidaAleatoria();
+        }
+
+        if (!gsm.isCargandoPartida()) {
+            jugador.setTurno(true);
+            cpu.setTurno(false);
+        }
+
+        sincronizarTableroVisual(jugador, playerBoard, true);
+        sincronizarTableroVisual(cpu, cpuBoard, false);
+        configurarTableroParaDisparos();
+        actualizarIndicadorTurno();
+
+        if (cpu.isTurno() && !juegoTerminado) {
+            System.out.println("Partida cargada en el turno de la CPU. Iniciando su jugada...");
+            // Usar un temporizador para simular que la CPU "piensa", igual que en cambiarTurno()
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+            scheduler.schedule(this::turnoCPU, 2, TimeUnit.SECONDS); // 2 segundos de delay
+            scheduler.shutdown();
+        }
+    }
+
+    /**
+     * Crea una partida completamente aleatoria si no se carga
+     * o no se viene desde la pantalla de preparación.
+     */
+    private void iniciarPartidaAleatoria() {
+        jugador = new JugadorModel();
+        jugador.setNombre("Player 1");
+        crearFlotaPara(jugador);
+        posicionarBarcosAleatoriamente(jugador);
+
+        cpu = new JugadorModel();
+        crearFlotaPara(cpu);
+        posicionarBarcosAleatoriamente(cpu);
     }
 
     /**
@@ -141,31 +179,6 @@ public class JuegoController {
     }
 
     /**
-     * Inicia una nueva partida de BattleShip
-     */
-    public void iniciarPartida() {
-        juegoTerminado = false;
-
-        cpu.reset();
-        crearFlotaPara(cpu);
-        posicionarBarcosAleatoriamente(cpu);
-
-        if (!GameStateManager.getInstance().hasJugador()) {
-            // Solo si no viene de preparación, crear barcos aleatorios
-            crearFlotaPara(jugador);
-            posicionarBarcosAleatoriamente(jugador);
-        }
-
-        sincronizarTableroVisual(jugador, playerBoard, true);
-        sincronizarTableroVisual(cpu, cpuBoard, true);
-
-        configurarTableroParaDisparos();
-
-        jugador.setTurno(true);
-        actualizarIndicadorTurno();
-    }
-
-    /**
      * Crea los barcos para el jugador (user, cpu)
      *
      * @param jugadorModel El jugador que recibe los barcos
@@ -181,6 +194,17 @@ public class JuegoController {
         jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
         jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
         jugadorModel.Barcos.add(new Barco(Barco.TipoBarco.FRAGATA));
+    }
+
+    /**
+     * Guarda el estado actual de la partida (jugador y CPU) en un archivo.
+     */
+    private void guardarPartidaActual() {
+
+        if (juegoTerminado) return;
+
+        PartidaGuardada partida = new PartidaGuardada(jugador, cpu);
+        SaveLoadManager.guardarPartida(partida);
     }
 
 
@@ -308,6 +332,8 @@ public class JuegoController {
             // Si el disparo fue exitoso (no hubo excepción), actualizamos la vista.
             sincronizarTableroVisual(cpu, cpuBoard, false);
 
+            guardarPartidaActual();
+
             // Comprobamos victoria
             if (cpu.tablero.todosLosBarcosHundidos()) {
                 finDelJuego(true);
@@ -363,10 +389,11 @@ public class JuegoController {
         final int finalR = r;
         final int finalC = c;
 
-        // Ejecutar en el hilo de la UI
         Platform.runLater(() -> {
             Barco barcoGolpeado = jugador.tablero.disparos(finalR, finalC);
             sincronizarTableroVisual(jugador, playerBoard, true);
+
+            guardarPartidaActual();
 
             if (jugador.tablero.todosLosBarcosHundidos()) {
                 finDelJuego(false);

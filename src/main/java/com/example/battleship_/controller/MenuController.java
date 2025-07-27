@@ -2,6 +2,7 @@ package com.example.battleship_.controller;
 
 import com.example.battleship_.model.GameStateManager;
 import com.example.battleship_.model.MusicModel;
+import com.example.battleship_.model.SaveLoadManager;
 import com.example.battleship_.view.ComoJugarView;
 import com.example.battleship_.view.JuegoView;
 import com.example.battleship_.view.MenuView;
@@ -105,15 +106,28 @@ public class MenuController {
 
     @FXML
     private void cargarPartida(ActionEvent event) throws IOException {
-        System.out.println("Iniciando partida guardada");
+        System.out.println("Intentando cargar partida guardada...");
 
-        GameStateManager.getInstance().reset();
-        JuegoView.resetInstance();
-        PreparacionView.resetInstance();
+        if (SaveLoadManager.archivoDeGuardadoExiste()) {
+            GameStateManager.getInstance().reset();
+            JuegoView.resetInstance();
+            PreparacionView.resetInstance();
 
-        JuegoView juegoView = JuegoView.getInstance();
-        MenuView.getInstance().close();
-        juegoView.show();
+            // Indicar que se debe cargar una partida
+            GameStateManager.getInstance().setCargandoPartida(true);
+
+            JuegoView juegoView = JuegoView.getInstance();
+            MenuView.getInstance().close();
+            juegoView.show();
+        } else {
+            // Opcional: Mostrar una alerta al usuario
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+            alert.setTitle("Cargar Partida");
+            alert.setHeaderText(null);
+            alert.setContentText("No se encontró ninguna partida guardada.");
+            alert.showAndWait();
+            System.out.println("No hay partida guardada para cargar.");
+        }
     }
 
     /**
