@@ -1,4 +1,5 @@
 package com.example.battleship_.model;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +11,9 @@ import java.util.Random;
  * @Author Jhojan Moreno
  * @version 1.0.2
  */
-public class JugadorModel {
+public class JugadorModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Lista de Barcos que el jugador tiene en su tablero

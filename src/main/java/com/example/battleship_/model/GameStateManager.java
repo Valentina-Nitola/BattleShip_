@@ -10,6 +10,7 @@ package com.example.battleship_.model;
 public class GameStateManager {
     private static GameStateManager instance;
     private JugadorModel jugador;
+    private boolean cargandoPartida;
 
     private GameStateManager() {
     }
@@ -24,6 +25,23 @@ public class GameStateManager {
         }
         return instance;
     }
+
+    /**
+     * Establece si el juego se está iniciando desde un archivo guardado.
+     * @param cargando true si se debe cargar una partida.
+     */
+    public void setCargandoPartida(boolean cargando) {
+        this.cargandoPartida = cargando;
+    }
+
+    /**
+     * Verifica si se debe cargar una partida guardada.
+     * @return true si se debe cargar una partida.
+     */
+    public boolean isCargandoPartida() {
+        return cargandoPartida;
+    }
+
 
     /**
      * Establece el jugador actual
@@ -50,9 +68,10 @@ public class GameStateManager {
     }
 
     /**
-     * Limpia el estado del juego
+     * Limpia el estado del juego, incluyendo la bandera de carga.
      */
     public void reset() {
         jugador = null;
+        cargandoPartida = false;
     }
 }

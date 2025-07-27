@@ -12,6 +12,7 @@ package com.example.battleship_.model;
  */
 public class Barco implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private TipoBarco tipo;
     private Orientacion orientacion;
     private int filaInicio;

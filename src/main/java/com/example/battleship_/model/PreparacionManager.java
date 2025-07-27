@@ -49,6 +49,4 @@ public class PreparacionManager {
         }
         return false;
     }
-
-    // Aquí puedes agregar métodos para validar ubicaciones, obtener posiciones, etc.
 }
