@@ -2,8 +2,6 @@ package com.example.battleship_;
 
 import com.example.battleship_.view.MenuView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
