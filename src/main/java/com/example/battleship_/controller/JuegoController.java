@@ -301,16 +301,30 @@ public class JuegoController {
     private void handlePlayerShot(int row, int column) {
         if (!jugador.isTurno() || juegoTerminado) return;
 
-        Barco barcoGolpeado = cpu.tablero.disparos(row, column);
-        sincronizarTableroVisual(cpu, cpuBoard, false);
+        try {
+            // INTENTAMOS procesar el disparo.
+            Barco barcoGolpeado = cpu.tablero.disparos(row, column);
 
-        if (cpu.tablero.todosLosBarcosHundidos()) {
-            finDelJuego(true);
-            return;
-        }
+            // Si el disparo fue exitoso (no hubo excepción), actualizamos la vista.
+            sincronizarTableroVisual(cpu, cpuBoard, false);
 
-        if (barcoGolpeado == null) {
-            cambiarTurno();
+            // Comprobamos victoria
+            if (cpu.tablero.todosLosBarcosHundidos()) {
+                finDelJuego(true);
+                return;
+            }
+
+            // Cambiamos de turno SOLO si fue un nuevo disparo en agua.
+            if (barcoGolpeado == null) {
+                cambiarTurno();
+            }
+            // Si fue un toque o hundimiento, el turno no cambia.
+
+        } catch (IllegalStateException e) {
+            // CAPTURAMOS LA EXCEPCIÓN: Esto significa que se hizo clic en una casilla ya revelada.
+            // Imprimimos el mensaje de la excepción para depuración.
+            System.out.println("Intento de disparo inválido: " + e.getMessage());
+            // NO HACEMOS NADA MÁS. El turno NO cambia.
         }
     }
 

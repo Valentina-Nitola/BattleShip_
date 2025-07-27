@@ -74,8 +74,6 @@ public class Board extends GridPane {
                     event.consume();
                 });
 
-
-
                 this.cells[row][col] = cell;
                 this.add(cell, col + 1, row + 1); // +1 para dejar espacio a las coordenadas
             }
